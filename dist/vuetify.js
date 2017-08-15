@@ -2075,20 +2075,9 @@ function unbind(el, binding) {
       }
     },
     selectedItems: function selectedItems() {
-      var _this = this;
-
       if (this.inputValue === null || typeof this.inputValue === 'undefined') return [];
 
-      return this.items.filter(function (i) {
-        if (!_this.multiple) {
-          return _this.getValue(i) === _this.getValue(_this.inputValue);
-        } else {
-          // Always return Boolean
-          return _this.inputValue.find(function (j) {
-            return _this.getValue(j) === _this.getValue(i);
-          }) !== undefined;
-        }
-      });
+      return this.inputValue;
     }
   },
 
@@ -2110,11 +2099,11 @@ function unbind(el, binding) {
       if (!val) this.blur();else this.focus();
     },
     isBooted: function isBooted() {
-      var _this2 = this;
+      var _this = this;
 
       this.$nextTick(function () {
-        if (_this2.content) {
-          _this2.content.addEventListener('scroll', _this2.onScroll, false);
+        if (_this.content) {
+          _this.content.addEventListener('scroll', _this.onScroll, false);
         }
       });
     },
@@ -2124,12 +2113,12 @@ function unbind(el, binding) {
   },
 
   mounted: function mounted() {
-    var _this3 = this;
+    var _this2 = this;
 
     this.$vuetify.load(function () {
-      if (_this3._isDestroyed) return;
+      if (_this2._isDestroyed) return;
 
-      _this3.content = _this3.$refs.menu.$refs.content;
+      _this2.content = _this2.$refs.menu.$refs.content;
     });
   },
   beforeDestroy: function beforeDestroy() {
@@ -2143,24 +2132,24 @@ function unbind(el, binding) {
 
   methods: {
     blur: function blur() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.$nextTick(function () {
-        _this4.focused = false;
-        _this4.hasFocused = true;
-        _this4.searchValue = null;
-        _this4.$el.blur();
+        _this3.focused = false;
+        _this3.hasFocused = true;
+        _this3.searchValue = null;
+        _this3.$el.blur();
       });
     },
     focus: function focus() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.focused = true;
       this.$refs.input && (this.autocomplete || this.editable) && this.$refs.input.focus();
 
       if (this.editable && this.inputValue !== null && typeof this.inputValue !== 'undefined') {
         this.$nextTick(function () {
-          _this5.$refs.input.value = _this5.getValue(_this5.inputValue);
+          _this4.$refs.input.value = _this4.getValue(_this4.inputValue);
         });
       }
     },
@@ -2187,11 +2176,11 @@ function unbind(el, binding) {
       return this.getPropertyFromItem(item, this.itemValue);
     },
     onScroll: function onScroll() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (!this.isActive) {
         requestAnimationFrame(function () {
-          return _this6.content.scrollTop = 0;
+          return _this5.content.scrollTop = 0;
         });
       } else {
         var showMoreItems = this.content.scrollHeight - (this.content.scrollTop + this.content.clientHeight) < 200;
@@ -2202,26 +2191,26 @@ function unbind(el, binding) {
       }
     },
     selectItem: function selectItem(item) {
-      var _this7 = this;
+      var _this6 = this;
 
       if (!this.multiple) {
         this.inputValue = this.returnObject ? item : this.getValue(item);
       } else {
         var inputValue = this.inputValue.slice();
         var i = this.inputValue.findIndex(function (i) {
-          return _this7.getValue(i) === _this7.getValue(item);
+          return _this6.getValue(i) === _this6.getValue(item);
         });
 
         i !== -1 && inputValue.splice(i, 1) || inputValue.push(item);
         this.inputValue = inputValue.map(function (i) {
-          return _this7.returnObject ? i : _this7.getValue(i);
+          return _this6.returnObject ? i : _this6.getValue(i);
         });
       }
 
       if (this.autocomplete || this.editable) {
         this.$nextTick(function () {
-          _this7.searchValue = null;
-          _this7.$refs.input && _this7.$refs.input.focus();
+          _this6.searchValue = null;
+          _this6.$refs.input && _this6.$refs.input.focus();
         });
       }
 
@@ -2230,14 +2219,14 @@ function unbind(el, binding) {
   },
 
   render: function render(h) {
-    var _this8 = this;
+    var _this7 = this;
 
     return this.genInputGroup([this.genSelectionsAndSearch(), this.genMenu()], {
       ref: 'activator',
       directives: [{
         name: 'click-outside',
         value: function value() {
-          return _this8.isActive = false;
+          return _this7.isActive = false;
         }
       }],
       on: {

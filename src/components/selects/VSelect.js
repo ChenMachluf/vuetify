@@ -158,16 +158,7 @@ export default {
       if (this.inputValue === null ||
         typeof this.inputValue === 'undefined') return []
 
-      return this.items.filter(i => {
-        if (!this.multiple) {
-          return this.getValue(i) === this.getValue(this.inputValue)
-        } else {
-          // Always return Boolean
-          return this.inputValue.find((j) => {
-            return this.getValue(j) === this.getValue(i)
-          }) !== undefined
-        }
-      })
+      return this.inputValue
     }
   },
 
