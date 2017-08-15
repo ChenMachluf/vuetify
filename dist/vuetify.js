@@ -2514,7 +2514,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 module.exports = {
 	"name": "vuetify",
-	"version": "0.14.10",
+	"version": "0.14.11",
 	"author": {
 		"name": "John Leider",
 		"email": "john.j.leider@gmail.com"
